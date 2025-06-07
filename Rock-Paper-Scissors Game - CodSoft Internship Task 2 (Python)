@@ -1,0 +1,76 @@
+import random
+
+def display_choices():
+    print("\nPlease choose:")
+    print("1. Rock 🪨")
+    print("2. Paper 📄")
+    print("3. Scissors ✂️")
+
+def get_user_choice():
+    choices = {'1': 'rock', '2': 'paper', '3': 'scissors'}
+    while True:
+        display_choices()
+        user_input = input("Enter your choice (1/2/3): ").strip()
+        if user_input in choices:
+            return choices[user_input]
+        else:
+            print("❌ Invalid choice. Please try again.")
+
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
+def determine_winner(user, computer):
+    win_conditions = {
+        'rock': 'scissors',
+        'paper': 'rock',
+        'scissors': 'paper'
+    }
+    if user == computer:
+        return "tie"
+    elif win_conditions[user] == computer:
+        return "user"
+    else:
+        return "computer"
+
+def show_result(user, computer, winner):
+    emoji_map = {'rock': '🪨', 'paper': '📄', 'scissors': '✂️'}
+    print(f"\nYou chose: {user.capitalize()} {emoji_map[user]}")
+    print(f"Computer chose: {computer.capitalize()} {emoji_map[computer]}")
+
+    if winner == "tie":
+        print("🤝 It's a tie!")
+    elif winner == "user":
+        print("🎉 You win!")
+    else:
+        print("💻 Computer wins!")
+
+def play_game():
+    user_score = 0
+    computer_score = 0
+
+    print("🎮 Welcome to Rock, Paper, Scissors Game!")
+    print("=========================================")
+
+    while True:
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+        winner = determine_winner(user_choice, computer_choice)
+
+        show_result(user_choice, computer_choice, winner)
+
+        if winner == "user":
+            user_score += 1
+        elif winner == "computer":
+            computer_score += 1
+
+        print(f"\n📊 Score -> You: {user_score} | Computer: {computer_score}")
+
+        again = input("\n🔁 Do you want to play another round? (yes/no): ").lower()
+        if again not in ['yes', 'y']:
+            print("\n👋 Thanks for playing! Final Score:")
+            print(f"You: {user_score} | Computer: {computer_score}")
+            break
+
+# Run the game
+if __name__ == "__main__":
+    play_game()
